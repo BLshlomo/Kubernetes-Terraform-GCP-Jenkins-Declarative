@@ -1,0 +1,27 @@
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: devops2020.ddnsgeek.com
+spec:
+  secretName: example-com-tls
+  issuerRef:
+    # The issuer created previously
+    name: letsencrypt-staging
+    #kind: ClusterIssuer
+  dnsNames:
+  - devops2020.ddnsgeek.com
+  #- www.example.com
+  
+  # acme:
+  #   config:
+  #   - dns01:
+  #     domains:
+  #     - devops2020.ddnsgeek.com
+
+
+    #   acme:
+    # config:
+    # - dns01:
+    #     provider: clouddns
+    #   domains:
+    #   - devops2020.ddnsgeek.com

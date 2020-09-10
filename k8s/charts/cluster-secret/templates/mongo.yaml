@@ -1,0 +1,7 @@
+apiVersion: clustersecret.io/v1
+kind: ClusterSecret
+metadata:
+  name: echo-secret-test
+type: Opaque
+data:
+  mongodburl: Im1vbmdvZGI6Ly9lY2hvOjEyMzQ1QG1vbmdvLTAubW9uZ28sbW9uZ28tMS5tb25nbyxtb25nby0yLm1vbmdvOjI3MDE3L2VjaG8/cmVwbGljYVNldD1yczAmYXV0aFNvdXJjZT1hZG1pbiI=

@@ -1,0 +1,15 @@
+remote/.terraform/
+gcp/.terraform/
+gke/.terraform/
+k8s/.terraform/
+k8s/charts/.terraform/
+remote/terraform.tfstate
+remote/terraform.tfstate.backup
+k8s/charts/terraform.tfstate
+gcp/key
+gcp/key.pub
+k8s/charts/api_access_try.txt
+k8s/charts/cert-manager-v1.0.0-alpha.1.tgz
+k8s/charts/client_secrets.json
+k8s/charts/grafana-5.5.5.tgz
+k8s/charts/key.json

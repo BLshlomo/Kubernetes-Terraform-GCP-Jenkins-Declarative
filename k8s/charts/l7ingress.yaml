@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    #cert-manager.io/cluster-issuer: "letsencrypt-staging"
+  name: ingress
+spec:
+  tls:
+    - hosts:
+        - devops2020.ddnsgeek.com
+      secretName: echoapp.ort
+  rules:
+    - host: devops2020.ddnsgeek.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: node
+              servicePort: 80

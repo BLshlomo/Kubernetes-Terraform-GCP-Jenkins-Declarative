@@ -1,0 +1,49 @@
+apiVersion: v1
+items:
+- apiVersion: cert-manager.io/v1alpha2
+  kind: Certificate
+  metadata:
+    creationTimestamp: "2020-08-22T00:00:06Z"
+    generation: 1
+    labels:
+      app.kubernetes.io/managed-by: Helm
+    name: echoapp-echoapp.cert
+    namespace: default
+    ownerReferences:
+    - apiVersion: extensions/v1beta1
+      blockOwnerDeletion: true
+      controller: true
+      kind: Ingress
+      name: echoapp-ingress
+      uid: 79ccc28f-388a-484f-8d61-baae152a8e49
+    resourceVersion: "281444"
+    selfLink: /apis/cert-manager.io/v1alpha2/namespaces/default/certificates/echoapp-echoapp.cert
+    uid: 56af39c3-3ff4-44ef-93bc-df237dad4a58
+  spec:
+    dnsNames:
+    - devops2020.ddnsgeek.com
+    issuerRef:
+      group: cert-manager.io
+      kind: ClusterIssuer
+      name: letsencrypt-prod
+    secretName: echoapp-echoapp.cert
+  status:
+    conditions:
+    - lastTransitionTime: "2020-08-22T00:00:06Z"
+      message: Certificate is up to date and has not expired
+      reason: Ready
+      status: "True"
+      type: Ready
+    - lastTransitionTime: "2020-08-22T00:00:06Z"
+      message: Issuing certificate as Secret was previously issued by ClusterIssuer.cert-manager.io/letsencrypt-staging
+      reason: IncorrectIssuer
+      status: "True"
+      type: Issuing
+    nextPrivateKeySecretName: echoapp-echoapp.cert-rg9sf
+    notAfter: "2020-11-19T22:55:23Z"
+    notBefore: "2020-08-21T22:55:23Z"
+    renewalTime: "2020-10-20T22:55:23Z"
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
