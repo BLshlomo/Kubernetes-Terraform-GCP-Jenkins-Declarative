@@ -13,3 +13,4 @@ k8s/charts/cert-manager-v1.0.0-alpha.1.tgz
 k8s/charts/client_secrets.json
 k8s/charts/grafana-5.5.5.tgz
 k8s/charts/key.json
+.history/

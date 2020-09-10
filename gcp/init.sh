@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# bootstrap script to init a compute Jenkins instance
+
 apt-get install software-properties-common -y
 curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg > /tmp/dkey; apt-key add /tmp/dkey
 add-apt-repository \
