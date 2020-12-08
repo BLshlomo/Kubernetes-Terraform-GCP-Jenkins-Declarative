@@ -72,7 +72,3 @@ resource google_project_service service-usage {
   service                    = "serviceusage.googleapis.com"
   disable_dependent_services = true
 }
-
-
-
-
