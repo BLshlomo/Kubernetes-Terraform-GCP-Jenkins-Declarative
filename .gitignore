@@ -1,10 +1,10 @@
 **/key
 **/key.pub
-**/k8s/charts/api_access_try.txt
-**/k8s/charts/cert-manager-v1.0.0-alpha.1.tgz
-**/k8s/charts/client_secrets.json
-**/k8s/charts/grafana-5.5.5.tgz
-**/k8s/charts/key.json
+**/charts/api_access_try.txt
+**/charts/cert-manager-v1.0.0-alpha.1.tgz
+**/charts/client_secrets.json
+**/charts/grafana-5.5.5.tgz
+**/charts/key.json
 **/.history/
 **/.terraform/
 **/terraform.tfstate*
