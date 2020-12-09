@@ -70,39 +70,39 @@ resource kubernetes_secret mongo-echo {
   }
 }
 
-resource kubernetes_secret dev-mongo-echo {
-  metadata {
-    name = "echo-mongo"
-    namespace = "dev"
-  }
-  
-  data = {
-    mongodburl = var.muri
-  }
-}
-
-resource kubernetes_secret prod-mongo-echo {
-  metadata {
-    name = "echo-mongo"
-    namespace = "production"
-  }
-  
-  data = {
-    mongodburl = var.muri
-  }
-}
-
-resource kubernetes_secret stag-mongo-echo {
-  metadata {
-    name = "echo-mongo"
-    namespace = "staging"
-  }
-  
-  data = {
-    mongodburl = var.muri
-  }
-}
-
+#resource kubernetes_secret dev-mongo-echo {
+#  metadata {
+#    name = "echo-mongo"
+#    namespace = "dev"
+#  }
+#  
+#  data = {
+#    mongodburl = var.muri
+#  }
+#}
+#
+#resource kubernetes_secret prod-mongo-echo {
+#  metadata {
+#    name = "echo-mongo"
+#    namespace = "production"
+#  }
+#  
+#  data = {
+#    mongodburl = var.muri
+#  }
+#}
+#
+#resource kubernetes_secret stag-mongo-echo {
+#  metadata {
+#    name = "echo-mongo"
+#    namespace = "staging"
+#  }
+#  
+#  data = {
+#    mongodburl = var.muri
+#  }
+#}
+#
 resource kubernetes_secret mongo-secret {
   metadata {
     name = "mongodb"
@@ -114,17 +114,17 @@ resource kubernetes_secret mongo-secret {
   }
 }
 
-resource kubernetes_secret clouddns-secret {
-  metadata {
-    name = "clouddns-dns01-solver-svc-acct"
-    namespace = "cert-manager"
-  }
-  data = {
-    "key.json" = data.terraform_remote_state.gke.outputs.clouddns-key
-    #base64decode(data.terraform_remote_state.gke.outputs.clouddns-key)
-  }
-}
-
+#resource kubernetes_secret clouddns-secret {
+#  metadata {
+#    name = "clouddns-dns01-solver-svc-acct"
+#    namespace = "cert-manager"
+#  }
+#  data = {
+#    "key.json" = data.terraform_remote_state.gke.outputs.clouddns-key
+#    #base64decode(data.terraform_remote_state.gke.outputs.clouddns-key)
+#  }
+#}
+#
 resource helm_release cert-manager {
   name  = "cert-manager"
   chart = "./charts/cert-manager"
