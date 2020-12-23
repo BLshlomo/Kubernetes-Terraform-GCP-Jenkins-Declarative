@@ -6,8 +6,13 @@ terraform {
 }
 
 locals {
-  region = "europe-west2"
-  zone   = "europe-west2-c"
+  region = "us-east1"
+  zone   = "us-east1-c"
+  pubip  = google_compute_instance.compute.network_interface.0.access_config.0.nat_ip
+}
+
+provider null {
+  version = "~> 3.0"
 }
 
 provider google {
@@ -22,7 +27,7 @@ resource google_compute_network vpc {
 }
 
 resource google_compute_network vpc_network {
-  name = "network"
+  name                    = "network"
   auto_create_subnetworks = false
 }
 
@@ -37,12 +42,17 @@ resource google_compute_subnetwork main-subnet {
   }
 }
 
+variable dns_addr {
+  default = "jenkins.ddnsgeek.com"
+}
+
+# Password must be at least 8 characters, letters and numbers are must.
 variable jenkins_password {}
 
-resource google_compute_address static {
-  name         = "public"
-  address_type = "EXTERNAL"
-}
+#resource google_compute_address static {
+#  name         = "public"
+#  address_type = "EXTERNAL"
+#}
 
 data google_compute_image jenkins {
   name    = "bitnami-jenkins-2-235-4-0-linux-debian-10-x86-64-nami"
@@ -62,65 +72,58 @@ resource google_compute_disk jenkins-home {
 
 // A single Compute Engine instance
 resource google_compute_instance compute {
-  name         = "jenkins"
-  machine_type = "n1-standard-1"
-  zone         = local.zone
+  name                      = "jenkins"
+  machine_type              = "n1-standard-1"
+  zone                      = local.zone
   allow_stopping_for_update = true
-  can_ip_forward = true
+  can_ip_forward            = true
   depends_on = [
     google_compute_disk.jenkins-home
   ]
 
   boot_disk {
     auto_delete = false
-    source = google_compute_disk.jenkins-home.self_link
+    source      = google_compute_disk.jenkins-home.self_link
   }
   network_interface {
-    network = google_compute_network.vpc_network.self_link
+    network    = google_compute_network.vpc_network.self_link
     subnetwork = google_compute_subnetwork.main-subnet.self_link
     access_config {
       // Include this section to give the VM an external ip address
-      nat_ip = google_compute_address.static.address
+      #nat_ip = google_compute_address.static.address
     }
   }
   metadata = {
-    startup-script = file("init.sh")
-    ssh-keys = "root:${file("key.pub")}"
-    bitnami-base-password  = var.jenkins_password
+    startup-script        = file("init.sh")
+    ssh-keys              = "root:${file("key.pub")}"
+    bitnami-base-password = var.jenkins_password
   }
 
   scheduling {
-    automatic_restart = true
+    preemptible       = true
+    automatic_restart = false
   }
 }
 
 resource google_compute_firewall compute {
   name    = "compute-jenkins"
   network = google_compute_network.vpc_network.id
-  
+
   allow {
     protocol = "tcp"
-    ports    = ["80","443", "22"]
+    ports    = ["80", "443", "22"]
   }
-  
+
   allow {
     protocol = "icmp"
   }
 }
 
-output public-ip {
-  value = google_compute_instance.compute.network_interface.0.access_config.0.nat_ip
+resource null_resource set-dns {
+  depends_on = [
+    google_compute_instance.compute
+  ]
+  provisioner local-exec {
+    command = "curl -X GET 'https://api.dynu.com/nic/update?hostname=${var.dns_addr}&myip=${local.pubip}' -H \"Authorization: Basic U29sb21vbkI6Y2tEQUxWNlJwcWlHOUZnCg==\""
+  }
 }
-
-output vpc {
-  value = google_compute_network.vpc.self_link
-}
-
-output network {
-  value = google_compute_network.vpc_network.self_link
-}
-
-output subnet {
-  value = google_compute_subnetwork.main-subnet.self_link
-}
-

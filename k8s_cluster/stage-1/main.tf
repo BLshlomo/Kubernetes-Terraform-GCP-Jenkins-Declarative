@@ -6,8 +6,8 @@ terraform {
 }
 
 locals {
-  region  = "europe-west2"
-  zone    = "europe-west2-c"
+  region  = "us-east1"
+  zone    = "us-east1-c"
   project = "devel-final"
 }
 
@@ -42,11 +42,11 @@ resource google_container_cluster primary {
   initial_node_count       = 1
 
   master_auth {
-    username = ""
-    password = ""
-
+    username = "admin"
+    #    password = ""
+    #
     client_certificate_config {
-      issue_client_certificate = false
+      issue_client_certificate = true
     }
   }
 }
@@ -79,7 +79,7 @@ resource google_container_node_pool primary_preemptible_nodes {
   }
 
   autoscaling {
-    min_node_count = 3
+    min_node_count = 1
     max_node_count = 5
   }
 
@@ -89,6 +89,8 @@ resource google_container_node_pool primary_preemptible_nodes {
   }
 }
 
-output cluster {
-  value = google_container_cluster.primary.name
+variable kubeconfig {
+  description = "kubeconfig path"
+  type        = string
+  default     = ""
 }
