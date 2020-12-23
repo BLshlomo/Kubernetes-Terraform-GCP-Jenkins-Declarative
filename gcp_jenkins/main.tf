@@ -124,6 +124,10 @@ resource null_resource set-dns {
     google_compute_instance.compute
   ]
   provisioner local-exec {
-    command = "curl -X GET 'https://api.dynu.com/nic/update?hostname=${var.dns_addr}&myip=${local.pubip}' -H \"Authorization: Basic U29sb21vbkI6Y2tEQUxWNlJwcWlHOUZnCg==\""
+    command = "curl -X GET 'https://api.dynu.com/nic/update?hostname=${var.dns_addr}&myip=${local.pubip}' -H \"Authorization: Basic ${dynu_ip_auth}\""
   }
+}
+
+variable dynu_ip_auth {
+  description = "dynu api change ip"
 }

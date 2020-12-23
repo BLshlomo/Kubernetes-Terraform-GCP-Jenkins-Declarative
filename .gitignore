@@ -10,3 +10,4 @@
 **/terraform.tfstate*
 **/*.swp
 **/*.bak
+**/gcp_jenkins/terraform.tfvars
