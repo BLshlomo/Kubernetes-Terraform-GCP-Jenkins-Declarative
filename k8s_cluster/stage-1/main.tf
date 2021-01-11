@@ -41,6 +41,9 @@ resource google_container_cluster primary {
   remove_default_node_pool = true
   initial_node_count       = 1
 
+  #  cluster_autoscaling {
+  #    enabled = true
+  #  }
   master_auth {
     username = "admin"
     #    password = ""
@@ -55,8 +58,8 @@ resource google_container_node_pool primary_preemptible_nodes {
   name     = "my-node-pool"
   location = local.zone
   cluster  = google_container_cluster.primary.name
-  #cluster_autoscaling = false
-  node_count = 3
+  #node_count = 3
+  initial_node_count = 1
 
   node_config {
     preemptible  = true

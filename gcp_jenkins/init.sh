@@ -22,5 +22,5 @@ curl -L https://raw.githubusercontent.com/docker/compose/1.26.2/contrib/completi
 chmod +x /usr/local/bin/docker-compose
 #ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 #groupmod -g 998 docker
-usermod -aG docker jenkins
 usermod -aG docker bitnami
+usermod -aG docker jenkins
